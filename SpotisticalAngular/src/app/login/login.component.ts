@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from'@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { SpotifyCode } from './spotifycode.model';
-import { UserInformation } from './userinformation.model';
+import { UserInformationService } from '../shared/userinformation.service';
+import { UserInformation } from '../shared/userinformation.model'
 
 @Component({
   selector: 'app-login',
@@ -10,8 +11,7 @@ import { UserInformation } from './userinformation.model';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private route : ActivatedRoute,
-    private http : HttpClient) {
+  constructor(private route : ActivatedRoute, private http : HttpClient, private userInformationService : UserInformationService) {
       this.route.queryParamMap.subscribe(params =>
         {
           console.log(params);
@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
   private baseUrl : string = "https://localhost:44333/api";
   private uri : string = "";
   private code : string = "";
-  private userInformation : UserInformation = new UserInformation;
 
   startLogin() {
     this.http.get(`${this.baseUrl}/login`, { responseType : 'text' })
@@ -52,13 +51,13 @@ export class LoginComponent implements OnInit {
     this.http.post(`${this.baseUrl}/login`, spotifyCode)
     .subscribe(
       res => {
-        this.userInformation = res as UserInformation;
-        console.log(this.userInformation);
+        var userInformation = res as UserInformation;
+        console.log(userInformation);
+        this.userInformationService.storeUserInformation(userInformation);
       },
       err => {
         console.log(err);
       }
     );
   }
-
 }

@@ -1,5 +1,5 @@
 export class UserInformation {
     name : string = "";
-    client : string = "";
+    userID : string = "";
     accessToken : string = "";
 }
