@@ -1,5 +1,9 @@
+import { Injectable } from "@angular/core";
 import { UserInformation } from "./userinformation.model";
 
+@Injectable ({
+    providedIn: 'root'
+})
 export class UserInformationService {
 
     constructor() {
@@ -18,6 +22,15 @@ export class UserInformationService {
         storage.setItem(this.userIDString, userInformation.userID);
     }
 
+    checkIfUserExists() : boolean {
+        if (this.storage.getItem(this.nameString) !== null &&
+            this.storage.getItem(this.userIDString) !== null &&
+            this.storage.getItem(this.accessTokenString) !== null) {
+            return true;
+        }
+        return false;
+    }
+
     getUserInformation() : UserInformation {
         var userInformation = new UserInformation();
         if (this.checkIfUserExists() === false) {
@@ -29,12 +42,9 @@ export class UserInformationService {
         return userInformation;
     }
 
-    checkIfUserExists() : boolean {
-        if (this.storage.getItem(this.nameString) !== null &&
-            this.storage.getItem(this.userIDString) !== null &&
-            this.storage.getItem(this.accessTokenString) !== null) {
-            return true;
-        }
-        return false;
+    deleteUserInformation() {
+        this.storage.removeItem(this.accessTokenString);
+        this.storage.removeItem(this.nameString);
+        this.storage.removeItem(this.userIDString);
     }
 }

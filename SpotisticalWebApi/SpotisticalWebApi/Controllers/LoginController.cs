@@ -15,6 +15,7 @@ namespace SpotisticalWebApi.Controllers
     {
         private string ClientID { get; set; }
         private string ClientSecret { get; set; }
+        private Uri RedirectUri { get; set; } = new Uri("http://localhost:4200/login");
 
         private SpotisticsDbContext _context; 
 
@@ -28,7 +29,7 @@ namespace SpotisticalWebApi.Controllers
         [HttpGet]
         public string Login()
         {
-            var loginRequest = new LoginRequest(redirectUri: new Uri("http://localhost:4200/"), clientId: ClientID, responseType: LoginRequest.ResponseType.Code)
+            var loginRequest = new LoginRequest(redirectUri: RedirectUri, clientId: ClientID, responseType: LoginRequest.ResponseType.Code)
             {
                 Scope = new[] { Scopes.UserTopRead, Scopes.UserReadEmail, Scopes.UserReadPrivate },
                 ShowDialog = true
@@ -41,7 +42,7 @@ namespace SpotisticalWebApi.Controllers
         [HttpPost]
         public async Task<UserInformation> Login(SpotifyCode spotifyCode)
         {
-            var response = await new OAuthClient().RequestToken(new AuthorizationCodeTokenRequest(ClientID, ClientSecret, spotifyCode.Code, new Uri("http://localhost:4200")));
+            var response = await new OAuthClient().RequestToken(new AuthorizationCodeTokenRequest(ClientID, ClientSecret, spotifyCode.Code, RedirectUri));
             var spotify = new SpotifyClient(response.AccessToken);
             var user = await spotify.UserProfile.Current();
             var userInformation = new UserInformation(user.DisplayName, user.Id, response.AccessToken);

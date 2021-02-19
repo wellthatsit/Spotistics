@@ -1,1 +1,12 @@
-<app-login></app-login>
+<h1>Hello from App Component</h1>
+
+<div *ngIf="loggedIn===false">
+    <button class="btn btn-primary" (click)="logIn()">Log in</button>
+</div>
+
+<div *ngIf="loggedIn===true">
+    <button class="btn btn-primary" (click)="logOut()">Log out</button>
+</div>
+
+
+<router-outlet></router-outlet>
