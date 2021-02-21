@@ -8,26 +8,28 @@ import { UserInformationService } from './shared/userinformation.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor (private userInformationService : UserInformationService, private loginService : LoginService) {
-    if (this.userInformationService.checkIfUserExists() === true) {
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-    }
+  constructor (private userInformationService : UserInformationService, private loginService : LoginService) {  
+    this.loggedIn = loginService.isLoggedIn();
     console.log(this.loggedIn);
-    console.log(new Date(Date.now()));
+    if (this.loggedIn === false) {
+      loginService.loginInProgressEvent.subscribe(this.loginInProgressEventHandler);
+      loginService.loginDoneEvent.subscribe(this.loginDoneEventHandler);
+    }
   }
 
-  loggedIn : boolean;
-
-  ngOnInit() {
-    
-  }
+  loginInProgress : boolean = false;
+  loggedIn : boolean = false;
 
   logIn() {
-    this.loginService.startLogin();
-    console.log("fazs");
-    this.loggedIn = true;
+    this.loginService.logIn();
+  }
+
+  loginInProgressEventHandler = (loginInProgress : boolean) => {
+    this.loginInProgress = loginInProgress;
+  }
+
+  loginDoneEventHandler = (loginResult : boolean) => {
+    this.loggedIn = loginResult;
   }
 
   logOut() {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpotifyCode } from '../login/spotifycode.model';
@@ -14,11 +14,17 @@ export class LoginService {
   constructor(private router : Router, private route : ActivatedRoute, private http : HttpClient, private userInformationService : UserInformationService, private location : Location) {
    }
 
-  private baseUrl : string = "https://localhost:44333/api";
-  private spotifyLoginUrl : string = "";
-  private codeQueryParameter : string = "";
+  private baseUrl : string = 'https://localhost:44333/api';
+  private spotifyLoginUrl : string = '';
+  private codeQueryParameter : string = '';
+  private myStorage = window.localStorage;
+  private loggedInStatusString : string = 'spotistics-loggedin';
 
-  startLogin() {
+  loginInProgressEvent = new EventEmitter();
+  loginDoneEvent = new EventEmitter();
+
+  logIn() {
+    this.loginInProgressEvent.emit(true);
     this.http.get(`${this.baseUrl}/login`, { responseType : 'text' })
     .subscribe(
       res => {
@@ -32,6 +38,8 @@ export class LoginService {
   }
 
   storeCodeQueryParameter() {
+    this.loginInProgressEvent.emit(true);
+
     this.route.queryParamMap.subscribe(params =>
       {
         this.codeQueryParameter = params.get('code') as string;
@@ -50,7 +58,11 @@ export class LoginService {
     .subscribe(
       res => {
         var userInformation = res as UserInformation;
-        this.userInformationService.storeUserInformation(userInformation)
+        this.userInformationService.storeUserInformation(userInformation);
+
+        this.setLogin();
+        this.loginDoneEvent.emit(true);
+        this.loginInProgressEvent.emit(false);
         
         this.router.navigate(['']);
       },
@@ -61,6 +73,20 @@ export class LoginService {
   }
 
   logOut() {
+    this.myStorage.removeItem(this.loggedInStatusString);
     this.userInformationService.deleteUserInformation();
+  }
+
+  private setLogin() {
+    this.myStorage.setItem(this.loggedInStatusString, '');
+    console.log(this.myStorage.getItem(this.loggedInStatusString));
+  }
+
+  isLoggedIn() {
+    if (this.myStorage.getItem(this.loggedInStatusString) !== null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
