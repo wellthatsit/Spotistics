@@ -14,11 +14,14 @@ export class AppComponent {
     if (this.loggedIn === false) {
       loginService.loginInProgressEvent.subscribe(this.loginInProgressEventHandler);
       loginService.loginDoneEvent.subscribe(this.loginDoneEventHandler);
+    } else {
+      this.userName = this.userInformationService.getUserInformation().name;
     }
   }
 
   loginInProgress : boolean = false;
   loggedIn : boolean = false;
+  userName : string = '';
 
   logIn() {
     this.loginService.logIn();

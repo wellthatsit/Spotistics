@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SpotifyAPI.Web;
 using SpotisticalWebApi.Models;
+using SpotisticalWebApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,23 +14,20 @@ namespace SpotisticalWebApi.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        private string ClientID { get; set; }
-        private string ClientSecret { get; set; }
-        private Uri RedirectUri { get; set; } = new Uri("http://localhost:4200/login");
+        private SpotifyService _spotifyService;
 
         private SpotisticsDbContext _context; 
 
         public LoginController(SpotisticsDbContext context)
         {
-            ClientID = Environment.GetEnvironmentVariable("SpotisticsClientID");
-            ClientSecret = Environment.GetEnvironmentVariable("SpotisticsClientSecret");
             _context = context;
+            _spotifyService = new SpotifyService(context);
         }
 
         [HttpGet]
         public string Login()
         {
-            var loginRequest = new LoginRequest(redirectUri: RedirectUri, clientId: ClientID, responseType: LoginRequest.ResponseType.Code)
+            var loginRequest = new LoginRequest(_spotifyService.RedirectUri, _spotifyService.ClientID, responseType: LoginRequest.ResponseType.Code)
             {
                 Scope = new[] { Scopes.UserTopRead, Scopes.UserReadEmail, Scopes.UserReadPrivate },
                 ShowDialog = true
@@ -42,7 +40,8 @@ namespace SpotisticalWebApi.Controllers
         [HttpPost]
         public async Task<UserInformation> Login(SpotifyCode spotifyCode)
         {
-            var response = await new OAuthClient().RequestToken(new AuthorizationCodeTokenRequest(ClientID, ClientSecret, spotifyCode.Code, RedirectUri));
+            var response = await new OAuthClient()
+                .RequestToken(new AuthorizationCodeTokenRequest(_spotifyService.ClientID, _spotifyService.ClientSecret, spotifyCode.Code, _spotifyService.RedirectUri));
             var spotify = new SpotifyClient(response.AccessToken);
             var user = await spotify.UserProfile.Current();
             var userInformation = new UserInformation(user.DisplayName, user.Id, response.AccessToken);

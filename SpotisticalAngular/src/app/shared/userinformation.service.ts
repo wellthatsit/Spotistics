@@ -22,6 +22,10 @@ export class UserInformationService {
         storage.setItem(this.userIDString, userInformation.userID);
     }
 
+    setAccessToken(accessToken : string) {
+        this.storage.setItem(this.accessTokenString, accessToken);
+    }
+
     checkIfUserExists() : boolean {
         if (this.storage.getItem(this.nameString) !== null &&
             this.storage.getItem(this.userIDString) !== null &&
