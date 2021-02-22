@@ -2,9 +2,9 @@ import { Track } from './track.model'
 
 export class TopTracksResult {
     constructor() {
-        this.TopTracks = new Array<Track>();
+        this.topTracks = new Array<Track>();
     }
 
-    public TopTracks : Track[];
-    public AccessToken : string = '';
+    public topTracks : Track[];
+    public accessToken : string = '';
 }

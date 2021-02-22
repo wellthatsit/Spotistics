@@ -1,2 +1,5 @@
-<p>top-tracks works!</p>
-<button (click)="getTopTracks();">Get Top Tracks!</button>
+<h2>Top tracks</h2>
+
+<div *ngFor="let track of tracks">
+    <p>{{track.title}}</p>
+</div>
