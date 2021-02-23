@@ -79,7 +79,6 @@ export class LoginService {
 
   private setLogin() {
     this.myStorage.setItem(this.loggedInStatusString, '');
-    console.log(this.myStorage.getItem(this.loggedInStatusString));
   }
 
   isLoggedIn() {

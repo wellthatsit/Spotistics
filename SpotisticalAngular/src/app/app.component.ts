@@ -10,7 +10,6 @@ import { UserInformationService } from './shared/userinformation.service';
 export class AppComponent {
   constructor (private userInformationService : UserInformationService, private loginService : LoginService) {  
     this.loggedIn = loginService.isLoggedIn();
-    console.log(this.loggedIn);
     if (this.loggedIn === false) {
       loginService.loginInProgressEvent.subscribe(this.loginInProgressEventHandler);
       loginService.loginDoneEvent.subscribe(this.loginDoneEventHandler);

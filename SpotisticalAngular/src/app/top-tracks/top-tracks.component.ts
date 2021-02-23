@@ -12,16 +12,25 @@ import { UserInformationService } from '../shared/userinformation.service';
 })
 export class TopTracksComponent implements OnInit {
 
-  constructor(private http : HttpClient, private userInformationService : UserInformationService) { 
-  }
+  constructor(private http : HttpClient, private userInformationService : UserInformationService) { }
 
   private baseUrl : string = 'https://localhost:44333/api';
   result : TopTracksResult = new TopTracksResult();
   tracks : Track[] = new Array<Track>();
 
+  private tabInactiveClass = 'nav-link';
+  private tabActiveClass = 'nav-link active';
+
+  shortTermClass = '';
+  mediumTermClass = '';
+  LongTermClass = '';
+
   ngOnInit(): void {
+    this.shortTermClass = this.tabActiveClass;
+    this.mediumTermClass = this.tabInactiveClass;
+    this.LongTermClass = this.tabInactiveClass;
+
     this.getTopTracks();
-    
   }
 
   getTopTracks(timeRange : string = 'short_term') {
@@ -34,18 +43,29 @@ export class TopTracksComponent implements OnInit {
     })
     .subscribe(res => {
       this.result = res as TopTracksResult;
-      console.log(this.result);
       this.userInformationService.setAccessToken(this.result.accessToken);
-
-      console.log(this.result);
-      console.log(typeof(this.result));
-      // for (var i = 0; i < this.result.topTracks.length; i++) {
-      //   this.tracks.push(this.result.topTracks[i]);
-      // }
       this.tracks = this.result.topTracks;
     }, err => {
       this.result = new TopTracksResult();
       console.log(err);
     });
+  }
+
+  shortTermClicked() {
+    this.shortTermClass = this.tabActiveClass;
+    this.mediumTermClass = this.tabInactiveClass;
+    this.LongTermClass = this.tabInactiveClass;
+  }
+
+  mediumTermClicked() {
+    this.shortTermClass = this.tabInactiveClass;
+    this.mediumTermClass = this.tabActiveClass;
+    this.LongTermClass = this.tabInactiveClass;
+  }
+
+  longTermClicked() {
+    this.shortTermClass = this.tabInactiveClass;
+    this.mediumTermClass = this.tabInactiveClass;
+    this.LongTermClass = this.tabActiveClass;
   }
 }

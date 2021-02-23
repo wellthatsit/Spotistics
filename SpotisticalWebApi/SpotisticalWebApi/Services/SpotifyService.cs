@@ -25,10 +25,8 @@ namespace SpotisticalWebApi.Services
 
         public async Task<TopTracksResult> GetTopTracks(string userID, string accessToken, string timeRange)
         {
-            var topTracks = new List<Track>();
             Paging<FullTrack> tracks;
-            var personalization = new PersonalizationTopRequest();
-            personalization.TimeRangeParam = PersonalizationTopRequest.TimeRange.ShortTerm;
+            var personalization = GetPersonalizationTopRequest(timeRange);
 
             try
             {
@@ -43,16 +41,35 @@ namespace SpotisticalWebApi.Services
                 tracks = await spotify.Personalization.GetTopTracks(personalization);
             }
 
+            var topTracks = new List<Track>();
             foreach (var track in tracks.Items)
             {
                 topTracks.Add(new Track(track));
             }
 
-            var result = new TopTracksResult();
-            result.TopTracks = topTracks;
-            result.AccessToken = accessToken;
+            var result = new TopTracksResult
+            {
+                TopTracks = topTracks,
+                AccessToken = accessToken
+            };
 
             return result;
+        }
+
+        public PersonalizationTopRequest GetPersonalizationTopRequest(string timeRange)
+        {
+            var personalization = new PersonalizationTopRequest();
+
+            if (timeRange == "short_term")
+                personalization.TimeRangeParam = PersonalizationTopRequest.TimeRange.ShortTerm;
+            else if (timeRange == "mid_term")
+                personalization.TimeRangeParam = PersonalizationTopRequest.TimeRange.MediumTerm;
+            else
+                personalization.TimeRangeParam = PersonalizationTopRequest.TimeRange.LongTerm;
+
+            personalization.Limit = 50;
+
+            return personalization;
         }
 
         public async Task<string> RefreshAccessToken(string userID)

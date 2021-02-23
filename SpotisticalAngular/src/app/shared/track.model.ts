@@ -1,3 +1,4 @@
 export class Track {
-    title : string = "";
+    artists : string[] = new Array<string>();
+    title : string = '';
 }
