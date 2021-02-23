@@ -26,7 +26,7 @@ namespace SpotisticalWebApi.Services
         public async Task<TopTracksResult> GetTopTracks(string userID, string accessToken, string timeRange)
         {
             Paging<FullTrack> tracks;
-            var personalization = GetPersonalizationTopRequest(timeRange);
+            var personalization = GetPersonalizationForTopTracks(timeRange);
 
             try
             {
@@ -56,7 +56,12 @@ namespace SpotisticalWebApi.Services
             return result;
         }
 
-        public PersonalizationTopRequest GetPersonalizationTopRequest(string timeRange)
+        public async Task<TopArtistsResult> GetTopArtists(string userID, string accessToken, string timeRange)
+        {
+            return new TopArtistsResult();
+        }
+
+        public PersonalizationTopRequest GetPersonalizationForTopTracks(string timeRange)
         {
             var personalization = new PersonalizationTopRequest();
 

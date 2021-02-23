@@ -17,6 +17,9 @@ export class TopTracksComponent implements OnInit {
   private baseUrl : string = 'https://localhost:44333/api';
   result : TopTracksResult = new TopTracksResult();
   tracks : Track[] = new Array<Track>();
+  shortTermTracks : Track[] = new Array<Track>();
+  mediumTermTracks : Track[] = new Array<Track>();
+  longTermTracks : Track[] = new Array<Track>();
 
   private tabInactiveClass = 'nav-link';
   private tabActiveClass = 'nav-link active';
@@ -38,6 +41,10 @@ export class TopTracksComponent implements OnInit {
   }
 
   getTopTracks(timeRange : string) {
+    if (this.checkIfAlreadyCached(timeRange) === true) {
+      return;
+    }
+
     var userInfo = this.userInformationService.getUserInformation();
     this.http.get(`${this.baseUrl}/toptracks`,
     { params :  new HttpParams()
@@ -49,10 +56,38 @@ export class TopTracksComponent implements OnInit {
       this.result = res as TopTracksResult;
       this.userInformationService.setAccessToken(this.result.accessToken);
       this.tracks = this.result.topTracks;
+      this.saveTopTracks(this.result.topTracks, timeRange);
     }, err => {
       this.result = new TopTracksResult();
       console.log(err);
     });
+  }
+
+  saveTopTracks(tracks : Track[], timeRange : string) {
+    if (timeRange === this.shortTermString) {
+      this.shortTermTracks = tracks;
+    } else if (timeRange === this.mediumTermString) {
+      this.mediumTermTracks = tracks;
+    } else {
+      this.longTermTracks = tracks;
+    }
+  }
+
+  checkIfAlreadyCached(timeRange : string) : boolean {
+    var isCached = false;
+
+    if (timeRange === this.shortTermString && this.shortTermTracks.length > 0) {
+      this.tracks = this.shortTermTracks;
+      isCached = true;
+    } else if (timeRange === this.mediumTermString && this.mediumTermTracks.length > 0) {
+      this.tracks = this.mediumTermTracks;
+      isCached = true;
+    } else if (timeRange === this.longTermString && this.longTermTracks.length > 0) {
+      this.tracks = this.longTermTracks;
+      isCached = true;
+    }
+
+    return isCached;
   }
 
   shortTermClicked() {
