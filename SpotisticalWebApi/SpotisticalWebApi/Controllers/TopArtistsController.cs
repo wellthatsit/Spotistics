@@ -13,18 +13,18 @@ namespace SpotisticalWebApi.Controllers
     public class TopArtistsController : ControllerBase
     {
         private SpotisticsDbContext _context;
-        private SpotisticsService _service;
+        private SpotisticsService _spotisticsService;
 
         public TopArtistsController(SpotisticsDbContext context)
         {
             _context = context;
-            _service = new SpotisticsService(context);
+            _spotisticsService = new SpotisticsService(context);
         }
 
         [HttpGet]
         public async Task<TopArtistsResult> GetTopArtists(string userID, string accessToken, string timeRange)
         {
-            var result = await _service.GetTopArtists(userID, accessToken, timeRange);
+            var result = await _spotisticsService.GetTopArtists(userID, accessToken, timeRange);
 
             return result;
         }

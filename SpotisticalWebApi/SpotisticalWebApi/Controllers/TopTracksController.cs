@@ -13,19 +13,19 @@ namespace SpotisticalWebApi.Controllers
     [Route("api/[controller]")]
     public class TopTracksController : ControllerBase
     {
-        private SpotisticsService _spotifyService;
+        private SpotisticsService _spotisticsService;
         private SpotisticsDbContext _context;
 
         public TopTracksController(SpotisticsDbContext context)
         {
             _context = context;
-            _spotifyService = new SpotisticsService(context);
+            _spotisticsService = new SpotisticsService(context);
         }
 
         [HttpGet]
         public async Task<TopTracksResult> GetTopTracks(string userID, string accessToken, string timeRange)
         {
-            var result = await _spotifyService.GetTopTracks(userID, accessToken, timeRange);
+            var result = await _spotisticsService.GetTopTracks(userID, accessToken, timeRange);
 
             return result;
         }

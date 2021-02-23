@@ -12,8 +12,12 @@ namespace SpotisticalWebApi.Models
 
         public string Title { get; set; }
 
+        public string CoverUrl { get; set; }
+
         public Track(FullTrack track)
         {
+            // the album covers are added to the Images list in a descending order by size
+            CoverUrl = track.Album.Images.ElementAt(track.Album.Images.Count - 1).Url;
             Artists = track.Artists.Select(a => a.Name).ToList();
             Title = track.Name;
         }
