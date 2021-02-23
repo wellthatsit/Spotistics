@@ -16,7 +16,14 @@
 
 <table class="table table-borderless">
   <tr *ngFor="let artist of artists; let i = index">
-    <td style="width: 5%;"><p class="fw-bold">#{{i + 1}}</p></td>
-    <td style="width: 95%;"><p class="fw-bold">{{artist.name}}</p></td>
+    <td style="width: 5%;">
+      <p class="fw-bold">#{{i + 1}}</p>
+    </td>
+    <td style="width: 10%;">
+      <img style="max-width: 150px;" [src]="artist.coverUrl">
+    </td>
+    <td style="width: 85%;">
+      <p class="fw-bold">{{artist.name}}</p>
+    </td>
   </tr>
 </table>
