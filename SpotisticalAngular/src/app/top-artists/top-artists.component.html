@@ -1,17 +1,22 @@
 <h2 class="text-center">Top artists</h2>
 
 <ul class="nav nav-tabs nav-justified" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button style="width: 100%;" (click)="shortTermClicked();" [class]="shortTermClass" type="button">4 weeks</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button style="width: 100%;" (click)="mediumTermClicked();" [class]="mediumTermClass" type="button">6 months</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button style="width: 100%;" (click)="longTermClicked();" [class]="longTermClass" type="button">All time</button>
-    </li>
-  </ul>
+  <li class="nav-item" role="presentation">
+    <button style="width: 100%;" (click)="shortTermClicked();" [class]="shortTermClass" type="button">previous 4 weeks</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button style="width: 100%;" (click)="mediumTermClicked();" [class]="mediumTermClass" type="button">previous 6 months</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button style="width: 100%;" (click)="longTermClicked();" [class]="longTermClass" type="button">all time</button>
+  </li>
+</ul>
 
-<div *ngFor="let artist of artists; let i = index">
-    <p>{{i + 1}}. {{artist.name}}</p>
-</div>
+<p></p>
+
+<table class="table table-borderless">
+  <tr *ngFor="let artist of artists; let i = index">
+    <td style="width: 5%;"><p class="fw-bold">#{{i + 1}}</p></td>
+    <td style="width: 95%;"><p class="fw-bold">{{artist.name}}</p></td>
+  </tr>
+</table>
