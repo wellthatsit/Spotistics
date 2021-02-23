@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpotisticalWebApi.Services
 {
-    public class SpotifyService
+    public class SpotisticsService
     {
         public string ClientID { get; set; }
         public string ClientSecret { get; set; }
@@ -16,7 +16,7 @@ namespace SpotisticalWebApi.Services
 
         private SpotisticsDbContext _context;
 
-        public SpotifyService(SpotisticsDbContext context)
+        public SpotisticsService(SpotisticsDbContext context)
         {
             _context = context;
             ClientID = Environment.GetEnvironmentVariable("SpotisticsClientID");
@@ -26,7 +26,7 @@ namespace SpotisticalWebApi.Services
         public async Task<TopTracksResult> GetTopTracks(string userID, string accessToken, string timeRange)
         {
             Paging<FullTrack> tracks;
-            var personalization = GetPersonalizationForTopTracks(timeRange);
+            var personalization = GetPersonalizationTopRequest(timeRange);
 
             try
             {
@@ -58,10 +58,38 @@ namespace SpotisticalWebApi.Services
 
         public async Task<TopArtistsResult> GetTopArtists(string userID, string accessToken, string timeRange)
         {
-            return new TopArtistsResult();
+            var personalization = GetPersonalizationTopRequest(timeRange);
+            Paging<FullArtist> artists;
+
+            try
+            {
+                var spotify = new SpotifyClient(accessToken);
+                artists = await spotify.Personalization.GetTopArtists(personalization);
+            }
+            catch (APIException)
+            {
+                // access token expired
+                accessToken = await RefreshAccessToken(userID);
+                var spotify = new SpotifyClient(accessToken);
+                artists = await spotify.Personalization.GetTopArtists(personalization);
+            }
+
+            var topArtists = new List<Artist>();
+            foreach(var artist in artists.Items)
+            {
+                topArtists.Add(new Artist(artist));
+            }
+
+            var result = new TopArtistsResult
+            {
+                TopArtists = topArtists,
+                AccessToken = accessToken
+            };
+
+            return result;
         }
 
-        public PersonalizationTopRequest GetPersonalizationForTopTracks(string timeRange)
+        public PersonalizationTopRequest GetPersonalizationTopRequest(string timeRange)
         {
             var personalization = new PersonalizationTopRequest();
 

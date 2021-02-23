@@ -14,14 +14,14 @@ namespace SpotisticalWebApi.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        private SpotifyService _spotifyService;
+        private SpotisticsService _spotifyService;
 
         private SpotisticsDbContext _context; 
 
         public LoginController(SpotisticsDbContext context)
         {
             _context = context;
-            _spotifyService = new SpotifyService(context);
+            _spotifyService = new SpotisticsService(context);
         }
 
         [HttpGet]

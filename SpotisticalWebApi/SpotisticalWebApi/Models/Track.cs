@@ -8,18 +8,14 @@ namespace SpotisticalWebApi.Models
 {
     public class Track
     {
-        public Track()
-        {
+        public List<string> Artists { get; set; }
 
-        }
+        public string Title { get; set; }
 
         public Track(FullTrack track)
         {
             Artists = track.Artists.Select(a => a.Name).ToList();
             Title = track.Name;
         }
-
-        public List<string> Artists { get; set; }
-        public string Title { get; set; }
     }
 }

@@ -13,12 +13,12 @@ namespace SpotisticalWebApi.Controllers
     public class TopArtistsController : ControllerBase
     {
         private SpotisticsDbContext _context;
-        private SpotifyService _service;
+        private SpotisticsService _service;
 
         public TopArtistsController(SpotisticsDbContext context)
         {
             _context = context;
-            _service = new SpotifyService(context);
+            _service = new SpotisticsService(context);
         }
 
         [HttpGet]
