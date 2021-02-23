@@ -26,7 +26,7 @@ export class TopTracksComponent implements OnInit {
 
   shortTermClass = '';
   mediumTermClass = '';
-  LongTermClass = '';
+  longTermClass = '';
 
   private shortTermString = 'short_term';
   private mediumTermString = 'medium_term';
@@ -35,7 +35,7 @@ export class TopTracksComponent implements OnInit {
   ngOnInit(): void {
     this.shortTermClass = this.tabActiveClass;
     this.mediumTermClass = this.tabInactiveClass;
-    this.LongTermClass = this.tabInactiveClass;
+    this.longTermClass = this.tabInactiveClass;
 
     this.getTopTracks(this.shortTermString);
   }
@@ -58,7 +58,6 @@ export class TopTracksComponent implements OnInit {
       this.tracks = this.result.topTracks;
       this.saveTopTracks(this.result.topTracks, timeRange);
     }, err => {
-      this.result = new TopTracksResult();
       console.log(err);
     });
   }
@@ -93,7 +92,7 @@ export class TopTracksComponent implements OnInit {
   shortTermClicked() {
     this.shortTermClass = this.tabActiveClass;
     this.mediumTermClass = this.tabInactiveClass;
-    this.LongTermClass = this.tabInactiveClass;
+    this.longTermClass = this.tabInactiveClass;
 
     this.getTopTracks(this.shortTermString);
   }
@@ -101,7 +100,7 @@ export class TopTracksComponent implements OnInit {
   mediumTermClicked() {
     this.shortTermClass = this.tabInactiveClass;
     this.mediumTermClass = this.tabActiveClass;
-    this.LongTermClass = this.tabInactiveClass;
+    this.longTermClass = this.tabInactiveClass;
 
     this.getTopTracks(this.mediumTermString);
   }
@@ -109,7 +108,7 @@ export class TopTracksComponent implements OnInit {
   longTermClicked() {
     this.shortTermClass = this.tabInactiveClass;
     this.mediumTermClass = this.tabInactiveClass;
-    this.LongTermClass = this.tabActiveClass;
+    this.longTermClass = this.tabActiveClass;
 
     this.getTopTracks(this.longTermString);
   }
