@@ -21,8 +21,8 @@ export class TopTracksComponent implements OnInit {
   mediumTermTracks : Track[] = new Array<Track>();
   longTermTracks : Track[] = new Array<Track>();
 
-  private tabInactiveClass = 'nav-link';
-  private tabActiveClass = 'nav-link active';
+  private tabInactiveClass = 'nav-link tab-button';
+  private tabActiveClass = 'nav-link tab-button active';
 
   shortTermClass = '';
   mediumTermClass = '';
