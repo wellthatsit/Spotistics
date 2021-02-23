@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from './shared/login.service';
 import { UserInformationService } from './shared/userinformation.service';
 
@@ -8,7 +9,7 @@ import { UserInformationService } from './shared/userinformation.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor (private userInformationService : UserInformationService, private loginService : LoginService) {  
+  constructor (private userInformationService : UserInformationService, private loginService : LoginService, private router : Router) {  
     this.loggedIn = loginService.isLoggedIn();
     if (this.loggedIn === false) {
       loginService.loginInProgressEvent.subscribe(this.loginInProgressEventHandler);
@@ -32,11 +33,13 @@ export class AppComponent {
 
   loginDoneEventHandler = (loginResult : boolean) => {
     this.loggedIn = loginResult;
+    this.userName = this.userInformationService.getUserInformation().name;
   }
 
   logOut() {
     this.loginService.logOut();
     this.loggedIn = false;
+    this.router.navigate(['']);
   }
 
   ngOnChanges() {

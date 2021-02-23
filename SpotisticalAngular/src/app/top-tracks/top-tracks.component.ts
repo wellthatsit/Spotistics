@@ -25,15 +25,19 @@ export class TopTracksComponent implements OnInit {
   mediumTermClass = '';
   LongTermClass = '';
 
+  private shortTermString = 'short_term';
+  private mediumTermString = 'medium_term';
+  private longTermString = 'long_term';
+
   ngOnInit(): void {
     this.shortTermClass = this.tabActiveClass;
     this.mediumTermClass = this.tabInactiveClass;
     this.LongTermClass = this.tabInactiveClass;
 
-    this.getTopTracks();
+    this.getTopTracks(this.shortTermString);
   }
 
-  getTopTracks(timeRange : string = 'short_term') {
+  getTopTracks(timeRange : string) {
     var userInfo = this.userInformationService.getUserInformation();
     this.http.get(`${this.baseUrl}/toptracks`,
     { params :  new HttpParams()
@@ -55,17 +59,23 @@ export class TopTracksComponent implements OnInit {
     this.shortTermClass = this.tabActiveClass;
     this.mediumTermClass = this.tabInactiveClass;
     this.LongTermClass = this.tabInactiveClass;
+
+    this.getTopTracks(this.shortTermString);
   }
 
   mediumTermClicked() {
     this.shortTermClass = this.tabInactiveClass;
     this.mediumTermClass = this.tabActiveClass;
     this.LongTermClass = this.tabInactiveClass;
+
+    this.getTopTracks(this.mediumTermString);
   }
 
   longTermClicked() {
     this.shortTermClass = this.tabInactiveClass;
     this.mediumTermClass = this.tabInactiveClass;
     this.LongTermClass = this.tabActiveClass;
+
+    this.getTopTracks(this.longTermString);
   }
 }

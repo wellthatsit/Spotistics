@@ -62,7 +62,7 @@ namespace SpotisticalWebApi.Services
 
             if (timeRange == "short_term")
                 personalization.TimeRangeParam = PersonalizationTopRequest.TimeRange.ShortTerm;
-            else if (timeRange == "mid_term")
+            else if (timeRange == "medium_term")
                 personalization.TimeRangeParam = PersonalizationTopRequest.TimeRange.MediumTerm;
             else
                 personalization.TimeRangeParam = PersonalizationTopRequest.TimeRange.LongTerm;
