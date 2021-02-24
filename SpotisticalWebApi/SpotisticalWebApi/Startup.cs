@@ -56,15 +56,8 @@ namespace SpotisticalWebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SpotisticalWebApi v1"));
             }
 
-            //if(!env.IsDevelopment())
-            //{
-            //    app.UseDefaultFiles();
-            //    // enables wwwroot file serving
-            //    app.UseStaticFiles();
-            //}
-
             app.UseDefaultFiles();
-            // enables wwwroot file serving
+
             app.UseStaticFiles();
 
             app.UseHttpsRedirection();
