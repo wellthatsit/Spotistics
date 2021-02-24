@@ -1,34 +1,30 @@
-<div *ngIf="loginInProgress===false">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
-      <div class="container-fluid">
+<nav class="navbar navbar-expand-sm navbar-dark navbar-toggleable-sm border-bottom box-shadow bg-success fixed-top">
+  <div class="container">   
+        <a class="navbar-brand text-dark " routerLink="/"><img height="30px" src="../../assets/icon6.jpg">Spotistics</a>
         <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        
-          <ul class="navbar-nav mx-auto">
-            <a class="navbar-brand text-dark " routerLink="/"><img height="30px" src="../../assets/icon6.jpg">Spotistics</a>
-            <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
-            <li class="nav-item" *ngIf="loggedIn===true">
-              <a [class]="homeClass" routerLink="/">Home</a>
-            </li>
-            <li class="nav-item" *ngIf="loggedIn===true">
-              <a [class]="topTracksClass" routerLink="top-tracks">Top tracks</a>
-            </li>
-            <li class="nav-item" *ngIf="loggedIn===true">
-              <a [class]="topArtistsClass" routerLink="top-artists">Top artists</a>
-            </li>
-            <li class="nav-item">
-              <a *ngIf="loggedIn===false" class="nav-link cursor-pointer" (click)="logIn();">Log in</a>    
-          </li>
-          <li class="nav-item">
-              <a *ngIf="loggedIn===true" class="nav-link cursor-pointer" (click)="logOut()">Log out</a>
-          </li>
-          </div>
-          </ul>
-          <ul class="navbar-nav">
+        <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item pl-3" *ngIf="loggedIn===true">
+                <a [class]="homeClass" routerLink="/">Home</a>
+              </li>
+              <li class="nav-item pl-3" *ngIf="loggedIn===true">
+                <a [class]="topTracksClass" routerLink="top-tracks">Top tracks</a>
+              </li>
+              <li class="nav-item pl-3" *ngIf="loggedIn===true">
+                <a [class]="topArtistsClass" routerLink="top-artists">Top artists</a>
+              </li>
+            </ul>
               
-          </ul>
-        
+            <ul class="nav navbar-nav navbar-right my-2 my-lg-0">
+              <li class="nav-item">
+                <a *ngIf="loggedIn===false" class="nav-link cursor-pointer" (click)="logIn();">Log in</a>    
+              </li>
+              <li class="nav-item">
+                  <a *ngIf="loggedIn===true" class="nav-link cursor-pointer mr-auto" (click)="logOut()">Log out</a>
+              </li>
+            </ul>
       </div>
-    </nav>
   </div>
+</nav>

@@ -1,7 +1,7 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SpotifyCode } from '../login/spotifycode.model';
+import { SpotifyCode } from './spotifycode.model';
 import { UserInformation } from './userinformation.model';
 import { UserInformationService } from './userinformation.service';
 import { Location } from '@angular/common'
@@ -11,10 +11,11 @@ import { Location } from '@angular/common'
 })
 export class LoginService {
 
-  constructor(private router : Router, private route : ActivatedRoute, private http : HttpClient, private userInformationService : UserInformationService, private location : Location) {
+  constructor(@Inject('API_BASE_URL') base : string, private router : Router, private route : ActivatedRoute, private http : HttpClient, private userInformationService : UserInformationService, private location : Location) {
+    this.baseUrl = base;
    }
 
-  private baseUrl : string = 'https://localhost:44333/api';
+  private baseUrl : string;
   private spotifyLoginUrl : string = '';
   private codeQueryParameter : string = '';
   private myStorage = window.localStorage;
@@ -37,13 +38,12 @@ export class LoginService {
     );
   }
 
-  storeCodeQueryParameter() {
-    this.loginInProgressEvent.emit(true);
-
+  checkForCodeAndFinishLogin() {
     this.route.queryParamMap.subscribe(params =>
       {
         this.codeQueryParameter = params.get('code') as string;
         if (this.codeQueryParameter !== "" && this.codeQueryParameter !== null) {
+          this.loginInProgressEvent.emit(true);
           this.finishLogin();
         }
       }
@@ -75,6 +75,7 @@ export class LoginService {
   logOut() {
     this.myStorage.removeItem(this.loggedInStatusString);
     this.userInformationService.deleteUserInformation();
+    this.loginDoneEvent.emit(false);
   }
 
   private setLogin() {

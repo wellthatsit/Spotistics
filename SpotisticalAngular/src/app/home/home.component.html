@@ -1,3 +1,14 @@
 <div class="jumbotron bg-light">
     <h2 class="text-center">Welcome to Spotistics!</h2>
+    <div *ngIf="loggedIn===false">
+        <div class="text-center p-5">
+            <button class="btn btn-success align-middle" (click)="logIn();">Login using Spotify</button>
+        </div>
+    </div>
+    <div *ngIf="loggedIn===true">
+        <div class="text-center p-5">
+            <button class="btn btn-success align-middle m-3" routerLink="top-tracks">Check top tracks</button>
+            <button class="btn btn-success align-middle m-3" routerLink="top-artists">Check top artists</button>
+        </div>
+    </div>
 </div>

@@ -14,11 +14,7 @@ export class NavigationBarComponent implements OnInit {
     router.events.subscribe(e => {
       this.isCollapsed = true;
       var url = router.url;
-      if (url === '/') {
-        this.homeClass = this.activeClass;
-        this.topTracksClass = this.inactiveClass;
-        this.topArtistsClass = this.inactiveClass;
-      } else if (url === '/top-tracks') {
+      if (url === '/top-tracks') {
         this.homeClass = this.inactiveClass;
         this.topTracksClass = this.activeClass;
         this.topArtistsClass = this.inactiveClass;
@@ -26,16 +22,15 @@ export class NavigationBarComponent implements OnInit {
         this.homeClass = this.inactiveClass;
         this.topTracksClass = this.inactiveClass;
         this.topArtistsClass = this.activeClass;
+      } else {
+        this.homeClass = this.activeClass;
+        this.topTracksClass = this.inactiveClass;
+        this.topArtistsClass = this.inactiveClass;
       }
     });
 
     this.loggedIn = loginService.isLoggedIn();
-    if (this.loggedIn === false) {
-      loginService.loginInProgressEvent.subscribe(this.loginInProgressEventHandler);
-      loginService.loginDoneEvent.subscribe(this.loginDoneEventHandler);
-    } else {
-      this.userName = this.userInformationService.getUserInformation().name;
-    }
+    loginService.loginDoneEvent.subscribe(this.loginDoneEventHandler);
     this.isCollapsed = true;
    }
 
@@ -44,9 +39,9 @@ export class NavigationBarComponent implements OnInit {
 
   activeClass = 'nav-link active';
   inactiveClass = 'nav-link';
-  homeClass = '';
-  topTracksClass = '';
-  topArtistsClass = '';
+  homeClass = this.activeClass;
+  topTracksClass = this.inactiveClass;
+  topArtistsClass = this.inactiveClass;
   isCollapsed = true;
   loginInProgress : boolean = false;
   loggedIn : boolean = false;
@@ -56,18 +51,12 @@ export class NavigationBarComponent implements OnInit {
     this.loginService.logIn();
   }
 
-  loginInProgressEventHandler = (loginInProgress : boolean) => {
-    this.loginInProgress = loginInProgress;
-  }
-
   loginDoneEventHandler = (loginResult : boolean) => {
     this.loggedIn = loginResult;
-    this.userName = this.userInformationService.getUserInformation().name;
   }
 
   logOut() {
     this.loginService.logOut();
-    this.loggedIn = false;
     this.router.navigate(['']);
   }
 }

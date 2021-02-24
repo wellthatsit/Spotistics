@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Artist } from '../shared/artist.model';
 import { TopArtistsResult } from '../shared/top-artists-result.model';
 import { UserInformation } from '../shared/userinformation.model';
@@ -13,17 +13,19 @@ import { UserInformationService } from '../shared/userinformation.service';
 })
 export class TopArtistsComponent implements OnInit {
 
-  constructor(private http : HttpClient, private userInformationService : UserInformationService) { }
+  constructor(@Inject('API_BASE_URL') base : string, private http : HttpClient, private userInformationService : UserInformationService) {
+    this.baseUrl = base;
+   }
 
-  private baseUrl : string = 'https://localhost:44333/api';
+  private baseUrl : string;
   result : TopArtistsResult = new TopArtistsResult();
   artists : Artist[] = new Array<Artist>();
   shortTermArtists : Artist[] = new Array<Artist>();
   mediumTermArtists : Artist[] = new Array<Artist>();
   longTermArtists : Artist[] = new Array<Artist>();
 
-  private tabInactiveClass = 'btn';
-  private tabActiveClass = 'btn bg-success text-white active';
+  private tabInactiveClass = 'btn navbar-label';
+  private tabActiveClass = 'btn navbar-label bg-success text-white active';
 
   shortTermClass = '';
   mediumTermClass = '';

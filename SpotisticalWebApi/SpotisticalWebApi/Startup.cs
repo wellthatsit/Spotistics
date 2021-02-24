@@ -36,7 +36,7 @@ namespace SpotisticalWebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpotisticsWebApi", Version = "v1" });
             });
 
-            var connectionString = Environment.GetEnvironmentVariable("SpotisticsDbContext_Remote");
+            var connectionString = Environment.GetEnvironmentVariable("SpotisticsDbContext");
             System.Diagnostics.Debug.WriteLine(connectionString);
             services.AddDbContext<SpotisticsDbContext>(options => options.UseSqlServer(connectionString));
         }
@@ -55,6 +55,17 @@ namespace SpotisticalWebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SpotisticalWebApi v1"));
             }
+
+            //if(!env.IsDevelopment())
+            //{
+            //    app.UseDefaultFiles();
+            //    // enables wwwroot file serving
+            //    app.UseStaticFiles();
+            //}
+
+            app.UseDefaultFiles();
+            // enables wwwroot file serving
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 

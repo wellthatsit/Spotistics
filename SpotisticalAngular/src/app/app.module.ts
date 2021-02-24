@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { TopTracksComponent } from './top-tracks/top-tracks.component';
 import { TopArtistsComponent } from './top-artists/top-artists.component';
@@ -14,7 +13,6 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 const routes: Routes = [
   
   { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'top-tracks', component: TopTracksComponent },
   { path: 'top-artists', component: TopArtistsComponent }
 ];
@@ -22,7 +20,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     TopTracksComponent,
     TopArtistsComponent,
     HomeComponent,
@@ -34,7 +31,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     NgbModule
   ],
-  providers: [],
+  providers: [ { provide: 'API_BASE_URL', useValue: 'http://spotistics.azurewebsites.net/api' } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,6 +5,7 @@ using SpotisticalWebApi.Models;
 using SpotisticalWebApi.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,17 +48,26 @@ namespace SpotisticalWebApi.Controllers
             var userInformation = new UserInformation(user.DisplayName, user.Id, response.AccessToken);
 
             // save refresh token to DB
-            var token = await _context.RefreshTokens.FirstOrDefaultAsync(t => t.UserID == user.Id);
-            if (token != null)
+            try
             {
-                token.Token = response.RefreshToken;
+                var token = await _context.RefreshTokens.FirstOrDefaultAsync(t => t.UserID == user.Id);
+                if (token != null)
+                {
+                    token.Token = response.RefreshToken;
+                }
+                else
+                {
+                    var refreshToken = new RefreshToken(user.Id, response.RefreshToken);
+                    await _context.RefreshTokens.AddAsync(refreshToken);
+                }
+                await _context.SaveChangesAsync();
             }
-            else
+            catch (Exception e)
             {
-                var refreshToken = new RefreshToken(user.Id, response.RefreshToken);
-                await _context.RefreshTokens.AddAsync(refreshToken);
+                Debug.WriteLine(e.Message);
             }
-            await _context.SaveChangesAsync();
+            
+            
 
             return userInformation;
         }

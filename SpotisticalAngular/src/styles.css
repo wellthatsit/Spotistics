@@ -3,3 +3,8 @@
 .cursor-pointer{
     cursor: pointer;
 }
+
+.navbar-label {
+    width:100%;
+    height:100%;
+}

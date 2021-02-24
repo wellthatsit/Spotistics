@@ -5,3 +5,9 @@
 /SpotisticalWebApi/.vs/SpotisticalWebApi
 /SpotisticalWebApi/SpotisticalWebApi/bin/Debug/net5.0
 /SpotisticalWebApi/SpotisticalWebApi/obj
+/SpotisticalWebApi/SpotisticalWebApi/bin/Release/net5.0
+/SpotisticalWebApi/SpotisticalWebApi/SpotisticalWebApi.csproj.user
+/SpotisticalWebApi/SpotisticalWebApi/Properties/PublishProfiles/spotistics - Web Deploy.pubxml.user
+/SpotisticalWebApi/SpotisticalWebApi/Properties/ServiceDependencies/spotistics - Web Deploy/profile.arm.json
+/SpotisticalWebApi/SpotisticalWebApi/Properties/PublishProfiles/spotistics - Web Deploy.pubxml
+/SpotisticalWebApi/SpotisticalWebApi/.config/dotnet-tools.json

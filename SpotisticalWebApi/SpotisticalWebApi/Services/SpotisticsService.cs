@@ -12,13 +12,15 @@ namespace SpotisticalWebApi.Services
     {
         public string ClientID { get; set; }
         public string ClientSecret { get; set; }
-        public Uri RedirectUri { get; set; } = new Uri("http://localhost:4200/login");
+        public Uri RedirectUri { get; set; }
 
         private SpotisticsDbContext _context;
 
         public SpotisticsService(SpotisticsDbContext context)
         {
             _context = context;
+            var redirectUrl = Environment.GetEnvironmentVariable("SpotisticsRedirectUrl");
+            RedirectUri = new Uri(redirectUrl);
             ClientID = Environment.GetEnvironmentVariable("SpotisticsClientID");
             ClientSecret = Environment.GetEnvironmentVariable("SpotisticsClientSecret");
         }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { LoginService } from './shared/login.service';
-import { UserInformationService } from './shared/userinformation.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +9,30 @@ import { UserInformationService } from './shared/userinformation.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor () {
-    
+  constructor (private router : Router, private activatedRoute : ActivatedRoute, private loginService : LoginService) {
+    this.activatedRoute.queryParams.subscribe(data => {
+      
+    });
+
+    if (loginService.isLoggedIn() === false) {
+      loginService.loginInProgressEvent.subscribe(this.loginInProgressEventHandler);
+    }
   }
+
+  ngOnInit() {
+    this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+        this.loginService.checkForCodeAndFinishLogin();
+    });
+  }
+
+  loginInProgress = false;
+
+  loginInProgressEventHandler = (loginInProgress : boolean) => {
+    this.loginInProgress = loginInProgress;
+  }
+
 
   title = 'Spotistical';
 }

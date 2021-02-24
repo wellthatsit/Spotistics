@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { TopTracksResult } from '../shared/top-tracks-result.model';
 import { Track } from '../shared/track.model';
 import { UserInformationService } from '../shared/userinformation.service';
@@ -12,17 +12,19 @@ import { UserInformationService } from '../shared/userinformation.service';
 })
 export class TopTracksComponent implements OnInit {
 
-  constructor(private http : HttpClient, private userInformationService : UserInformationService) { }
+  constructor(@Inject('API_BASE_URL') base : string, private http : HttpClient, private userInformationService : UserInformationService) { 
+    this.baseUrl = base;
+  }
 
-  private baseUrl : string = 'https://localhost:44333/api';
+  private baseUrl : string;
   result : TopTracksResult = new TopTracksResult();
   tracks : Track[] = new Array<Track>();
   shortTermTracks : Track[] = new Array<Track>();
   mediumTermTracks : Track[] = new Array<Track>();
   longTermTracks : Track[] = new Array<Track>();
 
-  private tabInactiveClass = 'btn';
-  private tabActiveClass = 'btn bg-success text-white active';
+  private tabInactiveClass = 'btn navbar-label';
+  private tabActiveClass = 'btn navbar-label bg-success text-white active';
 
   shortTermClass = '';
   mediumTermClass = '';
