@@ -9,6 +9,7 @@ import { TopTracksComponent } from './top-tracks/top-tracks.component';
 import { TopArtistsComponent } from './top-artists/top-artists.component';
 import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 
 const routes: Routes = [
   
@@ -24,7 +25,8 @@ const routes: Routes = [
     LoginComponent,
     TopTracksComponent,
     TopArtistsComponent,
-    HomeComponent
+    HomeComponent,
+    NavigationBarComponent
   ],
   imports: [
     BrowserModule,

@@ -21,17 +21,17 @@
 
 <table class="table table-borderless">
   <tr *ngFor="let track of tracks; let i = index">
-    <td style="width: 5%;">
-      <p class="fw-bold">#{{i + 1}}</p>
+    <td class="align-middle" style="width: 5%;">
+      <p class="font-weight-bold">#{{i + 1}}</p>
     </td>
     <td style="width: 10%;">
       <img style="max-width: 100px;" [src]="track.coverUrl">
     </td>
-    <td  style="width: 60%;">
-      <p class="fw-bold">{{track.title}}</p>
+    <td class="align-middle" style="width: 60%;">
+      <p class="font-weight-bold">{{track.title}}</p>
     </td>
-    <td style="width: 25%;">
-      <p class="fw-bold"><span *ngFor="let artist of track.artists">{{artist}} </span></p>
+    <td class="align-middle" style="width: 25%;">
+      <p class="font-weight-bold"><span *ngFor="let artist of track.artists">{{artist}} </span></p>
     </td>
   </tr>
 </table>

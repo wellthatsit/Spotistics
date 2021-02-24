@@ -57,7 +57,6 @@ export class TopTracksComponent implements OnInit {
       this.userInformationService.setAccessToken(this.result.accessToken);
       this.tracks = this.result.topTracks;
       this.saveTopTracks(this.result.topTracks, timeRange);
-      console.log(this.tracks);
     }, err => {
       console.log(err);
     });

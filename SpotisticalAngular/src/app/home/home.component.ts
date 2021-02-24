@@ -12,9 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private userInformationService : UserInformationService) { }
 
   ngOnInit(): void {
-    this.name = this.userInformationService.getUserInformation().name;
+    
   }
-
-  name = '';
 
 }
