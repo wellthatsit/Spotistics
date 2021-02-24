@@ -9,7 +9,11 @@ import { UserInformationService } from './shared/userinformation.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor (private userInformationService : UserInformationService, private loginService : LoginService, private router : Router) {  
+  constructor (private userInformationService : UserInformationService, private loginService : LoginService, private router : Router) {
+    router.events.subscribe(observer => {
+      this.isCollapsed = true;
+    });
+
     this.loggedIn = loginService.isLoggedIn();
     if (this.loggedIn === false) {
       loginService.loginInProgressEvent.subscribe(this.loginInProgressEventHandler);
@@ -17,8 +21,11 @@ export class AppComponent {
     } else {
       this.userName = this.userInformationService.getUserInformation().name;
     }
+    this.isCollapsed = true;
+    console.log('hello');
   }
 
+  isCollapsed = true;
   loginInProgress : boolean = false;
   loggedIn : boolean = false;
   userName : string = '';
