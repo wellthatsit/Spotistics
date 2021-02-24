@@ -1,5 +1,5 @@
 export class Track {
-    artists : string[] = new Array<string>();
+    artists : string = '';
     title : string = '';
     coverUrl : string = '';
 }

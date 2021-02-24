@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SpotisticalWebApi.Models
 {
     public class Track
     {
-        public List<string> Artists { get; set; }
+        public string Artists { get; set; }
 
         public string Title { get; set; }
 
@@ -16,11 +17,17 @@ namespace SpotisticalWebApi.Models
 
         public Track(FullTrack track)
         {
-            // the album covers are added to the Images list in a descending order by size
-            // we only need the smallest sized cover
-            //CoverUrl = track.Album.Images.ElementAt(track.Album.Images.Count - 1).Url;
-            CoverUrl = track.Album.Images.ElementAt(0).Url;
-            Artists = track.Artists.Select(a => a.Name).ToList();
+            CoverUrl = track.Album.Images[0].Url;
+
+            var sb = new StringBuilder();
+            for (int i = 0; i < track.Artists.Count; i++)
+            {
+                sb.Append(track.Artists[i].Name);
+                if (i + 1 < track.Artists.Count)
+                    sb.Append(", ");
+            }
+            Artists = sb.ToString();
+
             Title = track.Name;
         }
     }

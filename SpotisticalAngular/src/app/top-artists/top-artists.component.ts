@@ -22,8 +22,8 @@ export class TopArtistsComponent implements OnInit {
   mediumTermArtists : Artist[] = new Array<Artist>();
   longTermArtists : Artist[] = new Array<Artist>();
 
-  private tabInactiveClass = 'nav-link';
-  private tabActiveClass = 'nav-link active';
+  private tabInactiveClass = 'btn';
+  private tabActiveClass = 'btn bg-success text-white active';
 
   shortTermClass = '';
   mediumTermClass = '';

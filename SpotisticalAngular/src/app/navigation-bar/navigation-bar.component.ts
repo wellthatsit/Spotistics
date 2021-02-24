@@ -70,5 +70,4 @@ export class NavigationBarComponent implements OnInit {
     this.loggedIn = false;
     this.router.navigate(['']);
   }
-
 }

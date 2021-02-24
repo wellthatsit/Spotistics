@@ -11,10 +11,7 @@ namespace SpotisticalWebApi.Models
 
         public Artist(FullArtist fullArtist)
         {
-            // the album covers are added to the Images list in a descending order by size
-            // we only need the smallest sized cover
-            //CoverUrl = fullArtist.Images.ElementAt(fullArtist.Images.Count - 1).Url;
-            CoverUrl = fullArtist.Images.ElementAt(0).Url;
+            CoverUrl = fullArtist.Images[0].Url;
             Name = fullArtist.Name;
         }
     }

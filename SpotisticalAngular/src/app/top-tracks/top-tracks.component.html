@@ -1,13 +1,13 @@
 <ul class="nav nav-tabs nav-justified" role="tablist">
-    <li  class="nav-item" role="presentation">
-      <button style="width: 100%;" (click)="shortTermClicked();" [class]="shortTermClass" type="button">previous 4 weeks</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button style="width: 100%;" (click)="mediumTermClicked();" [class]="mediumTermClass" type="button">previous 6 months</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button style="width: 100%;" (click)="longTermClicked();" [class]="longTermClass" type="button">all time</button>
-    </li>
+  <li class="nav-item" role="presentation">
+    <label style="width: 100%;" (click)="shortTermClicked();" [class]="shortTermClass" type="button">previous 4 weeks</label>
+  </li>
+  <li class="nav-item" role="presentation">
+    <label style="width: 100%;" (click)="mediumTermClicked();" [class]="mediumTermClass" type="button">previous 6 months</label>
+  </li>
+  <li class="nav-item" role="presentation">
+    <label style="width: 100%;" (click)="longTermClicked();" [class]="longTermClass" type="button">max amount</label>
+  </li>
 </ul>
 
 <p></p>
@@ -20,18 +20,24 @@
 </div>
 
 <table class="table table-borderless">
+  <tr>
+    <th></th>
+    <th></th>
+    <th>Title</th>
+    <th>Artist</th>
+  </tr>
   <tr *ngFor="let track of tracks; let i = index">
     <td class="align-middle" style="width: 5%;">
       <p class="font-weight-bold">#{{i + 1}}</p>
     </td>
     <td style="width: 10%;">
-      <img style="max-width: 100px;" [src]="track.coverUrl">
+      <img style="max-width: 75px;" [src]="track.coverUrl">
     </td>
     <td class="align-middle" style="width: 60%;">
       <p class="font-weight-bold">{{track.title}}</p>
     </td>
     <td class="align-middle" style="width: 25%;">
-      <p class="font-weight-bold"><span *ngFor="let artist of track.artists">{{artist}} </span></p>
+      <p class="font-weight-bold">{{track.artists}}</p>
     </td>
   </tr>
 </table>
