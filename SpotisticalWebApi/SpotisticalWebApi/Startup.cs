@@ -33,10 +33,12 @@ namespace SpotisticalWebApi
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpotisticalWebApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SpotisticsWebApi", Version = "v1" });
             });
 
-            services.AddDbContext<SpotisticsDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("SpotisticsDbContext")));
+            var connectionString = Environment.GetEnvironmentVariable("SpotisticsDbContext_Remote");
+            System.Diagnostics.Debug.WriteLine(connectionString);
+            services.AddDbContext<SpotisticsDbContext>(options => options.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
