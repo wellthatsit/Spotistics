@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,11 @@ namespace SpotisticalWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 443;
+            });
+
             services.AddCors();
 
             services.AddControllers();
@@ -44,6 +50,21 @@ namespace SpotisticalWebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.IsHttps)
+                {
+                    await next();
+                }
+                else
+                {
+                    var withHttps = "https://" + context.Request.Host + context.Request.Path;
+                    context.Response.Redirect(withHttps);
+                }
+            });
+
+            app.UseHttpsRedirection();
+
             app.UseCors(policy => policy
             .AllowAnyOrigin()
             .AllowAnyHeader()
@@ -56,11 +77,11 @@ namespace SpotisticalWebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SpotisticalWebApi v1"));
             }
 
+            app.UseStatusCodePagesWithRedirects("/");
+
             app.UseDefaultFiles();
 
             app.UseStaticFiles();
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

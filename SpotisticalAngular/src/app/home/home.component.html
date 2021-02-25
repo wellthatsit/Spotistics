@@ -7,8 +7,8 @@
     </div>
     <div *ngIf="loggedIn===true">
         <div class="text-center p-5">
-            <button class="btn btn-success align-middle m-3" routerLink="top-tracks">Check top tracks</button>
-            <button class="btn btn-success align-middle m-3" routerLink="top-artists">Check top artists</button>
+            <button class="btn btn-success align-middle m-3" routerLink="top-tracks" [skipLocationChange]=true>Check top tracks</button>
+            <button class="btn btn-success align-middle m-3" routerLink="top-artists" [skipLocationChange]=true>Check top artists</button>
         </div>
     </div>
 </div>

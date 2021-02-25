@@ -1,19 +1,19 @@
 <nav class="navbar navbar-expand-sm navbar-dark navbar-toggleable-sm border-bottom box-shadow bg-success fixed-top">
   <div class="container">   
-        <a class="navbar-brand text-dark " routerLink="/"><img height="30px" src="../../assets/icon6.jpg">Spotistics</a>
+        <a class="navbar-brand text-dark " routerLink="/" [skipLocationChange]=true><img height="30px" src="../../assets/icon6.jpg">Spotistics</a>
         <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               <li class="nav-item pl-3" *ngIf="loggedIn===true">
-                <a [class]="homeClass" routerLink="/">Home</a>
+                <a [class]="homeClass" routerLink="/" [skipLocationChange]=true>Home</a>
               </li>
               <li class="nav-item pl-3" *ngIf="loggedIn===true">
-                <a [class]="topTracksClass" routerLink="top-tracks">Top tracks</a>
+                <a [class]="topTracksClass" routerLink="top-tracks" [skipLocationChange]=true>Top tracks</a>
               </li>
               <li class="nav-item pl-3" *ngIf="loggedIn===true">
-                <a [class]="topArtistsClass" routerLink="top-artists">Top artists</a>
+                <a [class]="topArtistsClass" routerLink="top-artists" [skipLocationChange]=true>Top artists</a>
               </li>
             </ul>
               

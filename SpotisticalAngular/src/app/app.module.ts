@@ -31,7 +31,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     NgbModule
   ],
-  providers: [ { provide: 'API_BASE_URL', useValue: 'http://spotistics.azurewebsites.net/api' } ],
+  providers: [ { provide: 'API_BASE_URL', useValue: 'https://spotistics.azurewebsites.net/api' } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
