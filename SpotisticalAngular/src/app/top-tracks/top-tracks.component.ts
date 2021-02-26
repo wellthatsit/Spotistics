@@ -43,6 +43,8 @@ export class TopTracksComponent implements OnInit {
   }
 
   getTopTracks(timeRange : string) {
+    this.tracks = new Array<Track>();
+
     if (this.checkIfAlreadyCached(timeRange) === true) {
       return;
     }

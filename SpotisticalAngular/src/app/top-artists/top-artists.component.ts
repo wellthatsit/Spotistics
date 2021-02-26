@@ -44,6 +44,8 @@ export class TopArtistsComponent implements OnInit {
   }
 
   getTopArtists(timeRange : string) {
+    this.artists = new Array<Artist>();
+
     if (this.checkIfAlreadyCached(timeRange) === true) {
       return;
     }
