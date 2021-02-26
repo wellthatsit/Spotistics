@@ -1,14 +1,15 @@
 <div class="jumbotron bg-light">
-    <h2 class="text-center">Welcome to Spotistics!</h2>
     <div *ngIf="loggedIn===false">
+        <h4 class="text-center">Log in to check your toplists based on your listening history on Spotify</h4>
         <div class="text-center p-5">
             <button class="btn btn-success align-middle" (click)="logIn();">Login using Spotify</button>
         </div>
     </div>
     <div *ngIf="loggedIn===true">
+        <h4 class="text-center">Welcome to Spotistics, {{name}}</h4>
         <div class="text-center p-5">
-            <button class="btn btn-success align-middle m-3" routerLink="top-tracks" [skipLocationChange]=true>Check top tracks</button>
-            <button class="btn btn-success align-middle m-3" routerLink="top-artists" [skipLocationChange]=true>Check top artists</button>
+            <button class="btn btn-success align-middle m-3" routerLink="top-tracks" [skipLocationChange]=true>Check your top tracks</button>
+            <button class="btn btn-success align-middle m-3" routerLink="top-artists" [skipLocationChange]=true>Check your top artists</button>
         </div>
     </div>
 </div>

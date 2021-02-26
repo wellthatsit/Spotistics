@@ -13,11 +13,15 @@ export class HomeComponent implements OnInit {
   constructor(private userInformationService : UserInformationService, private loginService : LoginService) { }
 
   ngOnInit(): void {
+    if (this.loginService.isLoggedIn() === true) {
+      this.name = this.userInformationService.getUserInformation().name;
+    }
     this.loggedIn = this.loginService.isLoggedIn();
     this.loginService.loginDoneEvent.subscribe(this.loginDoneEventHandler);
   }
 
   loggedIn = false;
+  name = '';
 
   logIn() {
     this.loginService.logIn();
@@ -25,5 +29,6 @@ export class HomeComponent implements OnInit {
 
   loginDoneEventHandler = (loginResult : boolean) => {
     this.loggedIn = loginResult;
+    this.name = this.userInformationService.getUserInformation().name;
   }
 }

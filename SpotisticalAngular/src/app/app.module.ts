@@ -9,6 +9,7 @@ import { TopArtistsComponent } from './top-artists/top-artists.component';
 import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
   
@@ -16,6 +17,9 @@ const routes: Routes = [
   { path: 'top-tracks', component: TopTracksComponent },
   { path: 'top-artists', component: TopArtistsComponent }
 ];
+
+const developmentApiBaseUrl : string = 'https://localhost:44333/api';
+const productionApiBaseUrl : string = 'https://spotistics.azurewebsites.net/api';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     NgbModule
   ],
-  providers: [ { provide: 'API_BASE_URL', useValue: 'https://spotistics.azurewebsites.net/api' } ],
+  providers: [
+    { provide: 'API_BASE_URL', useValue: environment.production ? productionApiBaseUrl : developmentApiBaseUrl  } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
