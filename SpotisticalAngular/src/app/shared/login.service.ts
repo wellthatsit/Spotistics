@@ -5,6 +5,7 @@ import { SpotifyCode } from './spotifycode.model';
 import { UserInformation } from './userinformation.model';
 import { UserInformationService } from './userinformation.service';
 import { Location } from '@angular/common'
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,9 @@ export class LoginService {
         window.location.href = this.spotifyLoginUrl;
       },
       err => {
-        console.log(err);
+        if (environment.production) {
+          console.log(err);
+        }
       }
     );
   }
@@ -67,7 +70,9 @@ export class LoginService {
         this.router.navigate(['']);
       },
       err => {
-        console.log(err);
+        if (environment.production) {
+          console.log(err);
+        }
       }
     );
   }

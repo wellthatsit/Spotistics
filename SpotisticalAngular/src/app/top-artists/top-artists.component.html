@@ -21,13 +21,13 @@
 
 <table class="table table-borderless">
   <tr *ngFor="let artist of artists; let i = index">
-    <td class="align-middle" style="width: 5%;">
+    <td class="align-middle" style="width: 2%;">
       <p class="font-weight-bold">#{{i + 1}}</p>
     </td>
     <td style="width: 10%;">
       <img style="max-width: 100px;" [src]="artist.coverUrl">
     </td>
-    <td class="align-middle" style="width: 85%;">
+    <td class="align-middle" style="width: 88%;">
       <p class="font-weight-bold">{{artist.name}}</p>
     </td>
   </tr>

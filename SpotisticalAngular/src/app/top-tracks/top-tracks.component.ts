@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { TopTracksResult } from '../shared/top-tracks-result.model';
 import { Track } from '../shared/track.model';
 import { UserInformationService } from '../shared/userinformation.service';
@@ -62,7 +63,9 @@ export class TopTracksComponent implements OnInit {
       this.tracks = this.result.topTracks;
       this.saveTopTracks(this.result.topTracks, timeRange);
     }, err => {
-      console.log(err);
+      if (environment.production) { 
+        console.log(err);
+      }
     });
   }
 

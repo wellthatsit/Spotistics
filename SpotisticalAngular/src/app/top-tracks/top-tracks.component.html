@@ -27,16 +27,16 @@
     <th>Artist</th>
   </tr>
   <tr *ngFor="let track of tracks; let i = index">
-    <td class="align-middle" style="width: 5%;">
+    <td class="align-middle" style="width: 2%;">
       <p class="font-weight-bold">#{{i + 1}}</p>
     </td>
     <td style="width: 10%;">
       <img style="max-width: 75px;" [src]="track.coverUrl">
     </td>
-    <td class="align-middle" style="width: 60%;">
+    <td class="align-middle" style="width: 50%;">
       <p class="font-weight-bold">{{track.title}}</p>
     </td>
-    <td class="align-middle" style="width: 25%;">
+    <td class="align-middle" style="width: 38%;">
       <p class="font-weight-bold">{{track.artists}}</p>
     </td>
   </tr>

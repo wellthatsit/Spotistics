@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Artist } from '../shared/artist.model';
 import { TopArtistsResult } from '../shared/top-artists-result.model';
-import { UserInformation } from '../shared/userinformation.model';
 import { UserInformationService } from '../shared/userinformation.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-top-artists',
@@ -63,7 +63,9 @@ export class TopArtistsComponent implements OnInit {
       this.artists = this.result.topArtists;
       this.saveTopArtists(this.result.topArtists, timeRange);
     }, err => {
-      console.log(err);
+      if (environment.production) { 
+        console.log(err);
+      }
     });
   }
 
