@@ -12,32 +12,41 @@
 
 <p></p>
 
-<div *ngIf="tracks.length==0">
+<div *ngIf="tracks.length===0">
   <div class="d-flex justify-content-center">
     <div class="spinner-border" role="status">
     </div>
   </div>
 </div>
 
-<table class="table table-borderless">
-  <tr>
-    <th></th>
-    <th></th>
-    <th>Title</th>
-    <th>Artist</th>
-  </tr>
-  <tr *ngFor="let track of tracks; let i = index">
-    <td class="align-middle" style="width: 2%;">
-      <p class="font-weight-bold">#{{i + 1}}</p>
-    </td>
-    <td style="width: 10%;">
-      <img style="max-width: 75px;" [src]="track.coverUrl">
-    </td>
-    <td class="align-middle" style="width: 50%;">
-      <p class="font-weight-bold">{{track.title}}</p>
-    </td>
-    <td class="align-middle" style="width: 38%;">
-      <p class="font-weight-bold">{{track.artists}}</p>
-    </td>
-  </tr>
-</table>
+<div *ngIf="tracks.length!==0">
+  <div class="text-center">
+    <button *ngIf="playlistCreated===false" class="btn btn-success" (click)="createTopTracksPlaylist();">Create a playlist of these tracks</button>
+    <div *ngIf="playlistCreated===true" class="alert alert-success" role="alert">
+      Playlist created! :) Check your Spotify account!
+    </div>
+  </div>
+  
+  <table class="table table-borderless">
+    <tr>
+      <th></th>
+      <th></th>
+      <th>Title</th>
+      <th>Artist</th>
+    </tr>
+    <tr *ngFor="let track of tracks; let i = index">
+      <td class="align-middle" style="width: 2%;">
+        <p class="font-weight-bold">#{{i + 1}}</p>
+      </td>
+      <td style="width: 10%;">
+        <img style="max-width: 75px;" [src]="track.coverUrl">
+      </td>
+      <td class="align-middle" style="width: 50%;">
+        <p class="font-weight-bold">{{track.title}}</p>
+      </td>
+      <td class="align-middle" style="width: 38%;">
+        <p class="font-weight-bold">{{track.artists}}</p>
+      </td>
+    </tr>
+  </table>
+</div>

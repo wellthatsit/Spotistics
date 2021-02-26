@@ -15,9 +15,13 @@ namespace SpotisticalWebApi.Models
 
         public string CoverUrl { get; set; }
 
+        public string Uri { get; set; }
+
         public Track(FullTrack track)
         {
+            Title = track.Name;
             CoverUrl = track.Album.Images[0].Url;
+            Uri = track.Uri;
 
             var sb = new StringBuilder();
             for (int i = 0; i < track.Artists.Count; i++)
@@ -27,8 +31,7 @@ namespace SpotisticalWebApi.Models
                     sb.Append(", ");
             }
             Artists = sb.ToString();
-
-            Title = track.Name;
+            
         }
     }
 }

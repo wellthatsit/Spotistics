@@ -32,15 +32,13 @@ namespace SpotisticalWebApi.Services
 
             try
             {
-                var spotify = new SpotifyClient(accessToken);
-                tracks = await spotify.Personalization.GetTopTracks(personalization);
+                tracks = await GetTopTracksFromSpotify(accessToken, personalization);
             }
+            // access token expired
             catch (APIException)
             {
-                // access token expired
                 accessToken = await RefreshAccessToken(userID);
-                var spotify = new SpotifyClient(accessToken);
-                tracks = await spotify.Personalization.GetTopTracks(personalization);
+                tracks = await GetTopTracksFromSpotify(accessToken, personalization);
             }
 
             var topTracks = new List<Track>();
@@ -58,6 +56,14 @@ namespace SpotisticalWebApi.Services
             return result;
         }
 
+        private async Task<Paging<FullTrack>> GetTopTracksFromSpotify(string accessToken, PersonalizationTopRequest personalization)
+        {
+            var spotify = new SpotifyClient(accessToken);
+            var tracks = await spotify.Personalization.GetTopTracks(personalization);
+
+            return tracks;
+        }
+
         public async Task<TopArtistsResult> GetTopArtists(string userID, string accessToken, string timeRange)
         {
             var personalization = GetPersonalizationTopRequest(timeRange);
@@ -66,14 +72,12 @@ namespace SpotisticalWebApi.Services
             try
             {
                 var spotify = new SpotifyClient(accessToken);
-                artists = await spotify.Personalization.GetTopArtists(personalization);
+                artists = await GetTopArtistsFromSpotify(accessToken, personalization);
             }
+            // access token expired
             catch (APIException)
             {
-                // access token expired
-                accessToken = await RefreshAccessToken(userID);
-                var spotify = new SpotifyClient(accessToken);
-                artists = await spotify.Personalization.GetTopArtists(personalization);
+                artists = await GetTopArtistsFromSpotify(accessToken, personalization);
             }
 
             var topArtists = new List<Artist>();
@@ -89,6 +93,39 @@ namespace SpotisticalWebApi.Services
             };
 
             return result;
+        }
+
+        private async Task<Paging<FullArtist>> GetTopArtistsFromSpotify(string accessToken, PersonalizationTopRequest personalization)
+        {
+            var spotify = new SpotifyClient(accessToken);
+            var artists = await spotify.Personalization.GetTopArtists(personalization);
+
+            return artists;
+        }
+
+        public async Task<bool> CreatePlaylist(CreateTopTracksPlaylistRequest request)
+        {
+            var result = false;
+            try
+            {
+                result = await CreatePlaylistOnSpotify(request);
+            }
+            // access token expired
+            catch (APIException)
+            {
+                result = await CreatePlaylistOnSpotify(request);
+            }
+
+            return result;
+        }
+
+        private async Task<bool> CreatePlaylistOnSpotify(CreateTopTracksPlaylistRequest request)
+        {
+            var spotify = new SpotifyClient(request.AccessToken);
+            var playlist = await spotify.Playlists.Create(request.UserID, new PlaylistCreateRequest($"{request.PlaylistName} {DateTime.Now}"));
+            await spotify.Playlists.AddItems(playlist.Id, new PlaylistAddItemsRequest(request.TrackUris));
+
+            return true;
         }
 
         public PersonalizationTopRequest GetPersonalizationTopRequest(string timeRange)

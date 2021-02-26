@@ -63,7 +63,7 @@ export class TopArtistsComponent implements OnInit {
       this.artists = this.result.topArtists;
       this.saveTopArtists(this.result.topArtists, timeRange);
     }, err => {
-      if (environment.production) { 
+      if (environment.production !== true) { 
         console.log(err);
       }
     });

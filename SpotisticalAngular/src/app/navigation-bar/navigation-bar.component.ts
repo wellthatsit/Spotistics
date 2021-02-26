@@ -56,6 +56,7 @@ export class NavigationBarComponent implements OnInit {
   }
 
   logOut() {
+    this.isCollapsed = !this.isCollapsed;
     this.loginService.logOut();
     this.router.navigate(['']);
   }

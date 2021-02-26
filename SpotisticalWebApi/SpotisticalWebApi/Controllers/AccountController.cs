@@ -30,7 +30,8 @@ namespace SpotisticalWebApi.Controllers
         {
             var loginRequest = new LoginRequest(_spotifyService.RedirectUri, _spotifyService.ClientID, responseType: LoginRequest.ResponseType.Code)
             {
-                Scope = new[] { Scopes.UserTopRead, Scopes.UserReadEmail, Scopes.UserReadPrivate },
+                Scope = new[] { Scopes.UserTopRead, Scopes.UserReadEmail, Scopes.UserReadPrivate,
+                Scopes.PlaylistModifyPrivate, Scopes.PlaylistModifyPublic, Scopes.PlaylistReadPrivate},
                 ShowDialog = true
             };
             var url = loginRequest.ToUri().ToString();

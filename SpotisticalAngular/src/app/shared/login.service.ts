@@ -34,7 +34,7 @@ export class LoginService {
         window.location.href = this.spotifyLoginUrl;
       },
       err => {
-        if (environment.production) {
+        if (environment.production !== true) {
           console.log(err);
         }
       }
@@ -70,7 +70,7 @@ export class LoginService {
         this.router.navigate(['']);
       },
       err => {
-        if (environment.production) {
+        if (environment.production !== true) {
           console.log(err);
         }
       }
@@ -84,7 +84,7 @@ export class LoginService {
     .subscribe(
       res => { },
       err => {
-        if (environment.production === true) {
+        if (environment.production !== true) {
           console.log(err);
         }
       }
