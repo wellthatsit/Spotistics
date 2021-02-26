@@ -27,7 +27,7 @@ export class LoginService {
 
   logIn() {
     this.loginInProgressEvent.emit(true);
-    this.http.get(`${this.baseUrl}/login`, { responseType : 'text' })
+    this.http.get(`${this.baseUrl}/account/startlogin`, { responseType : 'text' })
     .subscribe(
       res => {
         this.spotifyLoginUrl = res as string;
@@ -57,7 +57,7 @@ export class LoginService {
     var spotifyCode = new SpotifyCode();
     spotifyCode.code = this.codeQueryParameter;
 
-    this.http.post(`${this.baseUrl}/login`, spotifyCode)
+    this.http.post(`${this.baseUrl}/account/finishlogin`, spotifyCode)
     .subscribe(
       res => {
         var userInformation = res as UserInformation;
@@ -78,6 +78,17 @@ export class LoginService {
   }
 
   logOut() {
+    var userInformation = new UserInformation();
+    userInformation.userID = this.userInformationService.getUserInformation().userID;
+    this.http.post(`${this.baseUrl}/account/logout`, userInformation)
+    .subscribe(
+      res => { },
+      err => {
+        if (environment.production === true) {
+          console.log(err);
+        }
+      }
+    );
     this.myStorage.removeItem(this.loggedInStatusString);
     this.userInformationService.deleteUserInformation();
     this.loginDoneEvent.emit(false);
